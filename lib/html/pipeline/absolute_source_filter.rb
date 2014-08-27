@@ -18,9 +18,10 @@ module HTML
       # This filter does not write additional information to the context.
       # This filter would need to be run before CamoFilter.
       def call
-        doc.search("img").each do |element| 
+        doc.search("img").each do |element|
           next if element['src'].nil? || element['src'].empty?
           src = element['src'].strip
+          next if src.start_with? 'data'
           unless src.start_with? 'http'
             if src.start_with? '/'
               base = image_base_url
@@ -36,12 +37,12 @@ module HTML
         end
         doc
       end
-      
+
       # Implementation of validate hook.
       def validate
         needs :image_base_url, :image_subpage_url
       end
-      
+
       # Private: the base url you want to use
       def image_base_url
         context[:image_base_url]
@@ -51,7 +52,7 @@ module HTML
       def image_subpage_url
         context[:image_subpage_url]
       end
-    
+
     end
   end
 end
