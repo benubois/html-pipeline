@@ -27,6 +27,7 @@ module HTML
         doc.search("img").each do |element|
           original_src = element['src']
           next unless original_src
+          next if original_src.start_with? 'data'
           element['src'] = asset_proxy_url(original_src)
           element['data-canonical-src'] = original_src
         end

@@ -21,7 +21,6 @@ module HTML
         doc.search("img").each do |element|
           next if element['src'].nil? || element['src'].empty?
           src = element['src'].strip
-          next if src.start_with? 'data'
           unless src.start_with? 'http'
             if src.start_with? '/'
               base = image_base_url
